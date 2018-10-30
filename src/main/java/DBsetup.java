@@ -1,8 +1,9 @@
 import java.sql.*;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 
-public class DBsetup {
+public class DBsetup implements Runnable {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://ecinstance.czvxe7grlrif.eu-central-1.rds.amazonaws.com/ec_database";
 
@@ -12,12 +13,13 @@ public class DBsetup {
 
     static Connection conn = null;
     static Statement stmt = null;
+    static boolean isLoggedIn = false;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ExecutionException, InterruptedException {
+
+
 
         DBsetup dbsetup = new DBsetup();
-
-
 
         System.out.println("Load MySQL JDBC driver");
 
@@ -29,8 +31,18 @@ public class DBsetup {
             return;
         }
 
-        System.out.println("Connecting to database...");
-        DBsetup.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+        try {
+            System.out.println("Connecting to database...");
+            DBsetup.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+        } catch (SQLException e){
+
+            System.out.println("Unable to connect to database.");
+            return;
+        }
+
+        Tester test = new Tester('w',20);
 
 //        System.out.println("Creating statement...");
 //        stmt = conn.createStatement();
@@ -42,7 +54,7 @@ public class DBsetup {
 
         DBsetup.conn.setAutoCommit(false);
 
-        dbsetup.atm();
+//        dbsetup.atm();
 
 
 //        sql = "INSERT INTO account VALUES(1, 1111, 50), (2, 2222, 50), (3,3333,50)";
@@ -74,11 +86,11 @@ public class DBsetup {
     }
 
 
-    public void atm(){
+    public void atm() throws SQLException {
 
-        Connection conn = null;
-        Statement stmt = null;
-
+//        Connection conn = null;
+//        Statement stmt = null;
+//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Enter your account number : ");
@@ -88,50 +100,65 @@ public class DBsetup {
         int pin = scan.nextInt();
 
         this.balance_inquiry(account,pin);
+        isLoggedIn = true;
 
-        System.out.println("Please select the method of transaction \nPress 'w' for Withdrawal  \nPress'd' for Deposit  \nPress'e' to exit \n ");
+        while(isLoggedIn) {
+        System.out.println("Please select the method of transaction \nPress 'w' to withdraw  \nPress 'd' to Deposit  \nPress 'e' to exit \n ");
 
         char choice = scan.next().charAt(0);
 //        System.out.println(choice);
-        switch (choice) {
-            case ('w'):
-                withdraw(account,pin);
-                balance_inquiry(account,pin);
-                break;
-            case ('d'):
-                deposit(account,pin);
-                balance_inquiry(account,pin);
-                break;
-            case ('e'):
-                break;
+
+            switch (choice) {
+                case ('w'):
+                    withdraw(account, pin, 50);
+                    balance_inquiry(account, pin);
+                    break;
+                case ('d'):
+                    deposit(account, pin, 20);
+                    balance_inquiry(account, pin);
+                    break;
+                case ('e'):
+                    isLoggedIn = false;
+                    break;
+            }
         }
     }
 
-    public void deposit(int account, int pin){
+    public void deposit(int account, int pin, int amount) throws SQLException {
 
+        System.out.println("Deposit");
+
+//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
-
-        System.out.println("Enter the amount you want to deposit : ");
-        int amount = scan.nextInt();
         int balance  = balance_inquiry(account,pin);
+//        if(amount >= 0 ){
+//            System.out.println("Enter the amount you want to deposit : ");
+//            amount = scan.nextInt();
+//        }
+
+
 
         if(amount > 0) {
 
             amount = balance + amount;
 
             try {
-                this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//            this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
                 String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id=" + account;
                 this.stmt.executeUpdate(update_balance);
 //            if(results.getString(1) != null){
 //                System.out.println(results.getString(1));
 //            }
-
+                conn.commit();
             } catch (SQLException e) {
                 System.out.println(e);
 
                 e.printStackTrace();
+                conn.rollback();
+
+            }catch (NullPointerException e){
+
             }
 
         } else {
@@ -140,34 +167,42 @@ public class DBsetup {
 
     }
 
-    public void withdraw(int account, int pin){
-//
+    public void withdraw(int account, int pin, int amount) throws SQLException {
+
+        System.out.println("Withdraw");
+
 //        Connection conn = null;
 //        Statement stmt = null;
-
+//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
-
-        System.out.println("Enter the amount you want to withdraw : ");
-        int amount = scan.nextInt();
         int balance = balance_inquiry(account,pin);
+
+//        if(amount >= 0 ) {
+//            System.out.println("Enter the amount you want to withdraw : ");
+//            amount = scan.nextInt();
+//        }
 
         if(balance > 0 && balance >= amount) {
 
             amount = balance - amount;
 
             try {
-                this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//                conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
                 String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id=" + account;
                 this.stmt.executeUpdate(update_balance);
 //            if(results.getString(1) != null){
 //                System.out.println(results.getString(1));
 //            }
-
+                conn.commit();
             } catch (SQLException e) {
-                System.out.println(e);
 
+                System.out.println(e);
                 e.printStackTrace();
+                conn.rollback();
+
+            }catch (NullPointerException e){
+
             }
 
         } else {
@@ -177,12 +212,12 @@ public class DBsetup {
     }
 
 
-    public int balance_inquiry(int account, int pin){
+    public int balance_inquiry(int account, int pin) throws SQLException {
 
         int balance = 0;
 
         try {
-            this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"';" ;
 
@@ -196,10 +231,50 @@ public class DBsetup {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+
+//            System.out.println(e);
             e.printStackTrace();
+            conn.rollback();
+
         }
+//        catch (NullPointerException e){
+//
+//        }
+
         return balance;
     }
 
+    // this code it to test the implementation of the atm system.
+
+    static boolean isWithdrawal = false;
+
+    @Override
+    public void run() {
+//        System.out.println(Thread.currentThread().getName()+" Start. Command");
+        if(isWithdrawal) {
+            try {
+                isWithdrawal = false;
+                System.out.println("Withdraw");
+
+                withdraw(1,1111,20);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e){
+
+            }
+        } else {
+            try {
+                isWithdrawal = true;
+                System.out.println("Deposit");
+                deposit(1,1111,20);
+            } catch (SQLException e ) {
+                e.printStackTrace();
+            } catch(NullPointerException e){
+
+            }
+        }
+
+//        System.out.println(Thread.currentThread().getName()+" End.");
+    }
 }
