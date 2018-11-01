@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 
-public class DBsetup implements Runnable {
+public class DBsetup extends Thread {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://ecinstance.czvxe7grlrif.eu-central-1.rds.amazonaws.com/ec_database";
 
@@ -88,9 +88,6 @@ public class DBsetup implements Runnable {
 
     public void atm() throws SQLException {
 
-//        Connection conn = null;
-//        Statement stmt = null;
-//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Enter your account number : ");
@@ -126,30 +123,20 @@ public class DBsetup implements Runnable {
 
     public void deposit(int account, int pin, int amount) throws SQLException {
 
-        System.out.println("Deposit");
+        System.out.println(Thread.currentThread().getName()+" Deposit");
 
-//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
         int balance  = balance_inquiry(account,pin);
-//        if(amount >= 0 ){
-//            System.out.println("Enter the amount you want to deposit : ");
-//            amount = scan.nextInt();
-//        }
-
-
 
         if(amount > 0) {
 
             amount = balance + amount;
 
             try {
-//            this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
                 String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id=" + account;
                 this.stmt.executeUpdate(update_balance);
-//            if(results.getString(1) != null){
-//                System.out.println(results.getString(1));
-//            }
+
                 conn.commit();
             } catch (SQLException e) {
                 System.out.println(e);
@@ -169,18 +156,11 @@ public class DBsetup implements Runnable {
 
     public void withdraw(int account, int pin, int amount) throws SQLException {
 
-        System.out.println("Withdraw");
+        System.out.println(Thread.currentThread().getName()+" Withdraw");
 
-//        Connection conn = null;
-//        Statement stmt = null;
-//        this.conn.setAutoCommit(false);
         Scanner scan = new Scanner(System.in);
         int balance = balance_inquiry(account,pin);
 
-//        if(amount >= 0 ) {
-//            System.out.println("Enter the amount you want to withdraw : ");
-//            amount = scan.nextInt();
-//        }
 
         if(balance > 0 && balance >= amount) {
 
@@ -191,9 +171,7 @@ public class DBsetup implements Runnable {
 
                 String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id=" + account;
                 this.stmt.executeUpdate(update_balance);
-//            if(results.getString(1) != null){
-//                System.out.println(results.getString(1));
-//            }
+
                 conn.commit();
             } catch (SQLException e) {
 
@@ -219,17 +197,18 @@ public class DBsetup implements Runnable {
         try {
 //            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"';" ;
+            String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"' for Update ;" ;
 
             this.stmt = this.conn.createStatement();
             ResultSet results = stmt.executeQuery(balance_inquiry);
 
             if(results.next()){
-                System.out.println("Your current balance is : "+results.getString(1));
+                System.out.println("Balance Inquiry:"+ Thread.currentThread().getName() +" Your current balance is : "+results.getString(1));
+//                System.out.println("Your current balance is : "+results.getString(1));
                 balance = Integer.parseInt(results.getString(1));
 //                System.out.println(results.getString(1));
             }
-
+        conn.commit();
         } catch (SQLException e) {
 
 //            System.out.println(e);
@@ -251,29 +230,37 @@ public class DBsetup implements Runnable {
     @Override
     public void run() {
 //        System.out.println(Thread.currentThread().getName()+" Start. Command");
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            System.out.print("Something went wrong.");
+            e.printStackTrace();
+        }
         if(isWithdrawal) {
             try {
                 isWithdrawal = false;
-                System.out.println("Withdraw");
+//                System.out.println("Withdraw");
 
-                withdraw(1,1111,20);
-
+                withdraw(1,1111,10);
+                balance_inquiry(1,1111);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NullPointerException e){
 
             }
-        } else {
-            try {
-                isWithdrawal = true;
-                System.out.println("Deposit");
-                deposit(1,1111,20);
-            } catch (SQLException e ) {
-                e.printStackTrace();
-            } catch(NullPointerException e){
+            } else {
+                try {
+                    isWithdrawal = true;
+    //                System.out.println("Deposit");
+                    deposit(1,1111,12);
+                    balance_inquiry(1,1111);
 
+                } catch (SQLException e ) {
+                    e.printStackTrace();
+                } catch(NullPointerException e){
+
+                }
             }
-        }
 
 //        System.out.println(Thread.currentThread().getName()+" End.");
     }

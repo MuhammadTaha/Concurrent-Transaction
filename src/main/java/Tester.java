@@ -18,15 +18,23 @@ public class Tester{
 //        Runnable runnable = ()->{
 //            System.out.println("Hello World");
 //        };
-        Executor executor = Executors.newFixedThreadPool(10);
+//        Executor executor = Executors.newFixedThreadPool(10);
 
 
-        for(int i = 0 ; i<8 ;i++) {
+        for(int i = 0 ; i<10 ;i++) {
+            System.out.println("Thread : "+ (i+1) +" Start. Command");
+
+            DBsetup ds = new DBsetup();
+            Thread.sleep(100);
+            ds.start();
+
+
+
 //            executor.execute(() -> {
-                System.out.println("Thread : "+ (i+1) +" Start. Command");
 //            });
-            Runnable workerThread = new DBsetup();
-            executor.execute(workerThread);
+//            Runnable workerThread = new DBsetup();
+//            Thread.sleep(100);
+//            executor.execute(workerThread);
         }
 
 //        for(int i =0 ; i<=10 ;i++) {

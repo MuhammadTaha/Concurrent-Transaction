@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d730e819-b664-4adf-bb1b-9fb9fc3b49f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Tester.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ec-assignment.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DBsetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DBsetup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Credentials.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Credentials.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tester.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/DBsetup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DBsetup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ec-assignment-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,10 +18,13 @@
     <session id="89459542">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -52,12 +46,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="12" />
-          <entry key="java" value="1286" />
+          <entry key="java" value="1527" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1286" />
+          <entry key="JAVA" value="1527" />
           <entry key="PLAIN_TEXT" value="12" />
         </counts>
       </usages-collector>
@@ -68,35 +62,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DBsetup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="265" column="7" lean-forward="true" selection-start-line="265" selection-start-column="7" selection-end-line="265" selection-end-column="7" />
+            <state relative-caret-position="3">
+              <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/sql/DriverManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="246" selection-start-line="246" selection-end-line="246" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-28">
-              <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+            <state relative-caret-position="116">
+              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,6 +96,7 @@
     <findStrings>
       <find>ResultSet</find>
       <find>balance = Integer.parseInt(results.getString(1));</find>
+      <find>import java\.sql\.\*\;\nimport java\.util\.Scanner\;\nimport java\.util\.concurrent\.ExecutionException\;\n\n\npublic class DBsetup implements Runnable \{\n    static final String JDBC_DRIVER \= \&quot;com\.mysql\.cj\.jdbc\.Driver\&quot;\;\n    static final String DB_URL \= \&quot;jdbc\:mysql\:\/\/ecinstance\.czvxe7grlrif\.eu\-central\-1\.rds\.amazonaws\.com\/ec_database\&quot;\;\n\n\n    static final String USER \= Credentials\.userName\;\n    static final String PASS \= Credentials\.password\;\n\n    static Connection conn \= null\;\n    static Statement stmt \= null\;\n    static boolean isLoggedIn \= false\;\n\n    public static void main\(String\[\] args\) throws SQLException\, ExecutionException\, InterruptedException \{\n\n\n\n        DBsetup dbsetup \= new DBsetup\(\)\;\n\n        System\.out\.println\(\&quot;Load MySQL JDBC driver\&quot;\)\;\n\n        try \{\n            Class\.forName\(JDBC_DRIVER\)\;\n        \} catch \(ClassNotFoundException e\) \{\n            System\.out\.println\(\&quot;MySQL JDBC Driver not found\.\&quot;\)\;\n            e\.printStackTrace\(\)\;\n            return\;\n        \}\n\n\n        try \{\n            System\.out\.println\(\&quot;Connecting to database\.\.\.\&quot;\)\;\n            DBsetup\.conn \= DriverManager\.getConnection\(DB_URL\, USER\, PASS\)\;\n\n        \} catch \(SQLException e\)\{\n\n            System\.out\.println\(\&quot;Unable to connect to database\.\&quot;\)\;\n            return\;\n        \}\n\n        Tester test \= new Tester\(\'w\'\,20\)\;\n\n\/\/        System\.out\.println\(\&quot;Creating statement\.\.\.\&quot;\)\;\n\/\/        stmt \= conn\.createStatement\(\)\;\n\/\/\n        String sql\;\n\/\/        System\.out\.println\(\&quot;Creating table\.\.\.\&quot;\)\;\n\/\/        sql \= \	\&quot;CREATE TABLE IF NOT EXISTS account \(account_id INT\, pinCode INT\, balance DECIMAL\, UNIQUE \(account_id\)\)\;\&quot;\;\n\/\/        stmt\.executeUpdate\(sql\)\;\n\n        DBsetup\.conn\.setAutoCommit\(false\)\;\n\n\/\/        dbsetup\.atm\(\)\;\n\n\n\/\/        sql \= \&quot;INSERT INTO account VALUES\(1\, 1111\, 50\)\, \(2\, 2222\, 50\)\, \(3\,3333\,50\)\&quot;\;\n\/\/        stmt\.executeUpdate\(sql\)\;\n\n\n\n        \/\/enable transaction demarcation\n\n\/\/        stmt \= conn\.createStatement\(\)\;\n\/\/\n\/\/        try \{\n\/\/            \/\/submit transaction \(prepare\)\n\/\/            System\.out\.println\(\&quot;Submit demarcated transactions to database\&quot;\)\;\n\/\/\/\/            stmt\.executeUpdate\(update_1\)\;\n\/\/\/\/            stmt\.executeUpdate\(update_2\)\;\n\/\/\n\/\/            \/\/Commit both transactions\.\n\/\/            System\.out\.println\(\&quot;Commit demarcated transactions\.\&quot;\)\;\n\/\/\/\/            conn\.commit\(\)\;\n\/\/\n\/\/        \} catch \(SQLException e\) \{\n\/\/            System\.out\.println\(\&quot;Rollback demarcated transactions\.\&quot;\)\;\n\/\/\/\/            conn\.rollback\(\)\;\n\/\/        \}\n\/\/\n\/\/        System\.out\.println\(\&quot;Closing connection\.\.\.\&quot;\)\;\n\/\/        stmt\.close\(\)\;\n    \}\n\n\n    public void atm\(\) throws SQLException \{\n\n\/\/        Connection conn \= null\;\n\/\/        Statement stmt \= null\;\n\/\/        this\.conn\.setAutoCommit\(false\)\;\n        Scanner scan \= new Scanner\(System\.in\)\;\n\n        System\.out\.println\(\&quot;Enter your account number \: \&quot;\)\;\n        int account \= scan\.nextInt\(\)\;\n\n        System\.out\.println\(\&quot;Enter your pin \: \&quot;\)\;\n        int pin \= scan\.nextInt\(\)\;\n\n        this\.balance_inquiry\(account\,pin\)\;\n        isLoggedIn \= true\;\n\n        while\(isLoggedIn\) \{\n        System\.out\.println\(\&quot;Please select the method of transaction \\nPress \'w\' to withdraw  \\nPress \'d\' to Deposit  \\nPress \'e\' to exit \\n \&quot;\)\;\n\n        char choice \= scan\.next\(\)\.charAt\(0\)\;\n\/\/        System\.out\.println\(choice\)\;\n\n            switch \(choice\) \{\n                case \(\'w\'\)\:\n                    withdraw\(account\, pin\, 50\)\;\n                    balance_inquiry\(account\, pin\)\;\n                    break\;\n                case \(\'d\'\)\:\n                    deposit\(account\, pin\, 20\)\;\n                    balance_inquiry\(account\, pin\)\;\n                    break\;\n                case \(\'e\'\)\:\n                    isLoggedIn \= false\;\n                    break\;\n            \}\n        \}\n    \}\n\n    public void deposit\(int account\, int pin\, int amount\) throws SQLException \{\n\n        System\.out\.println\(\&quot;Deposit\&quot;\)\;\n\n\/\/        this\.conn\.setAutoCommit\(false\)\;\n        Scanner scan \= new Scanner\(System\.in\)\;\n        int balance  \= balance_inquiry\(account\,pin\)\;\n\/\/        if\(amount \&gt;\= 0 \)\{\n\/\/            System\.out\.println\(\&quot;Enter the amount you want to deposit \: \&quot;\)\;\n\/\/            amount \= scan\.nextInt\(\)\;\n\/\/        \}\n\n\n\n        if\(amount \&gt; 0\) \{\n\n            amount \= balance \+ amount\;\n\n            try \{\n\/\/            this\.conn \= DriverManager\.getConnection\(DB_URL\, USER\, PASS\)\;\n\n                String update_balance \= \&quot;UPDATE account SET balance \= \&quot; \+ amount \+ \&quot; WHERE account_id\=\&quot; \+ account\;\n                this\.stmt\.executeUpdate\(update_balance\)\;\n\/\/            if\(results\.getString\(1\) \!\= null\)\{\n\/\/                System\.out\.println\(results\.getString\(1\)\)\;\n\/\/            \}\n                conn\.commit\(\)\;\n            \} catch \(SQLException e\) \{\n                System\.out\.println\(e\)\;\n\n                e\.printStackTrace\(\)\;\n                conn\.rollback\(\)\;\n\n            \}catch \(NullPointerException e\)\{\n\n            \}\n\n        \} else \{\n            System\.out\.println\(\&quot;Invalid entry\.\&quot;\)\;\n        \}\n\n    \}\n\n    public void withdraw\(int account\, int pin\, int amount\) throws SQLException \{\n\n        System\.out\.println\(\&quot;Withdraw\&quot;\)\;\n\n\/\/        Connection conn \= null\;\n\/\/        Statement stmt \= null\;\n\/\/        this\.conn\.setAutoCommit\(false\)\;\n        Scanner scan \= new Scanner\(System\.in\)\;\n        int balance \= balance_inquiry\(account\,pin\)\;\n\n\/\/        if\(amount \&gt;\= 0 \) \{\n\/\/            System\.out\.println\(\&quot;Enter the amount you want to withdraw \: \&quot;\)\;\n\/\/            amount \= scan\.nextInt\(\)\;\n\/\/        \}\n\n        if\(balance \&gt; 0 \&amp;\&amp; balance \&gt;\= amount\) \{\n\n            amount \= balance \- amount\;\n\n            try \{\n\/\/                conn \= DriverManager\.getConnection\(DB_URL\, USER\, PASS\)\;\n\n                String update_balance \= \&quot;UPDATE account SET balance \= \&quot; \+ amount \+ \&quot; WHERE account_id\=\&quot; \+ account\;\n                this\.stmt\.executeUpdate\(update_balance\)\;\n\/\/            if\(results\.getString\(1\) \!\= null\)\{\n\/\/                System\.out\.println\(results\.getString\(1\)\)\;\n\/\/            \}\n                conn\.commit\(\)\;\n            \} catch \(SQLException e\) \{\n\n                System\.out\.println\(e\)\;\n                e\.printStackTrace\(\)\;\n                conn\.rollback\(\)\;\n\n            \}catch \(NullPointerException e\)\{\n\n            \}\n\n        \} else \{\n            System\.out\.println\(\&quot;You have insufficient balance\.\&quot;\)\;\n        \}\n\n    \}\n\n\n    public int balance_inquiry\(int account\, int pin\) throws SQLException \{\n\n        int balance \= 0\;\n\n        try \{\n\/\/            conn \= DriverManager\.getConnection\(DB_URL\, USER\, PASS\)\;\n\n            String balance_inquiry \= \&quot;Select balance from ec_database\.account where account_id \= \'\&quot;\+ account \+\&quot;\' and pinCode \= \'\&quot;\+ pin \+\&quot;\'\;\&quot; \;\n\n            this\.stmt \= this\.conn\.createStatement\(\)\;\n            ResultSet results \= stmt\.executeQuery\(balance_inquiry\)\;\n\n            if\(results\.next\(\)\)\{\n                System\.out\.println\(Thread\.currentThread\(\)\.getName\(\) \+\&quot;Your current balance is \: \&quot;\+results\.getString\(1\)\)\;\n\/\/                System\.out\.println\(\&quot;Your current balance is \: \&quot;\+results\.getString\(1\)\)\;\n                balance \= Integer\.parseInt\(results\.getString\(1\)\)\;\n\/\/                System\.out\.println\(results\.getString\(1\)\)\;\n            \}\n        conn\.commit\(\)\;\n        \} catch \(SQLException e\) \{\n\n\/\/            System\.out\.println\(e\)\;\n            e\.printStackTrace\(\)\;\n            conn\.rollback\(\)\;\n\n        \}\n\/\/        catch \(NullPointerException e\)\{\n\/\/\n\/\/        \}\n\n        return balance\;\n    \}\n\n    \/\/ this code it to test the implementation of the atm system\.\n\n    static boolean isWithdrawal \= false\;\n\n    \@Override\n    public void run\(\) \{\n\/\/        System\.out\.println\(Thread\.currentThread\(\)\.getName\(\)\+\&quot; Start\. Command\&quot;\)\;\n        if\(isWithdrawal\) \{\n            try \{\n                isWithdrawal \= false\;\n\/\/                System\.out\.println\(\&quot;Withdraw\&quot;\)\;\n\n                withdraw\(1\,1111\,10\)\;\n\n            \} catch \(SQLException e\) \{\n                e\.printStackTrace\(\)\;\n            \} catch \(NullPointerException e\)\{\n\n            \}\n            \} else \{\n                try \{\n                    isWithdrawal \= true\;\n    \/\/                System\.out\.println\(\&quot;Deposit\&quot;\)\;\n                    deposit\(1\,1111\,12\)\;\n                \} catch \(SQLException e \) \{\n                    e\.printStackTrace\(\)\;\n                \} catch\(NullPointerException e\)\{\n\n                \}\n            \}\n\n\/\/        System\.out\.println\(Thread\.currentThread\(\)\.getName\(\)\+\&quot; End\.\&quot;\)\;\n    \}\n\}</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -128,9 +108,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/DBsetupTest.groovy" />
         <option value="$PROJECT_DIR$/src/main/java/Test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Tester.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DBsetup.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/java/DBsetup.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Tester.java" />
       </list>
     </option>
   </component>
@@ -159,8 +139,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -199,13 +177,15 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540931575092" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541110150989" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Groovy JUnit" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -267,7 +247,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2639485" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -276,12 +256,12 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27951807" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27951807" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32891566" />
@@ -314,34 +294,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Tester.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28">
-          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="15">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/sql/DriverManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
+        <state relative-caret-position="518">
           <caret line="246" selection-start-line="246" selection-end-line="246" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DBsetup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="265" column="7" lean-forward="true" selection-start-line="265" selection-start-column="7" selection-end-line="265" selection-end-column="7" />
+        <state relative-caret-position="3">
+          <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Tester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        <state relative-caret-position="116">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
