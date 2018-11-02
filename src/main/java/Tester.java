@@ -7,13 +7,13 @@ public class Tester{
     public Tester(char type, int amount) throws ExecutionException, InterruptedException {
 
 
-        System.out.println(" in Tester");
-        switch (type){
-            case 'd':
-                break;
-            case 'w':
-                break;
-        }
+        System.out.println("\n Testing concurrency ");
+//        switch (type){
+//            case 'd':
+//                break;
+//            case 'w':
+//                break;
+//        }
 
 //        Runnable runnable = ()->{
 //            System.out.println("Hello World");
@@ -21,8 +21,8 @@ public class Tester{
 //        Executor executor = Executors.newFixedThreadPool(10);
 
 
-        for(int i = 0 ; i<10 ;i++) {
-            System.out.println("Thread : "+ (i+1) +" Start. Command");
+        for(int i = 0 ; i<6 ;i++) {
+            System.out.println("Thread : "+ (i+1) +" Starts.");
 
             DBsetup ds = new DBsetup();
             Thread.sleep(100);
@@ -50,9 +50,7 @@ public class Tester{
 
 
 
-        public void printData(){
-            System.out.println("Hello World");
-        }
+
 
 
 }

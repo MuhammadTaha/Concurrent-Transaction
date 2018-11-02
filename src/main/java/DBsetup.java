@@ -15,9 +15,10 @@ public class DBsetup extends Thread {
     static Statement stmt = null;
     static boolean isLoggedIn = false;
 
+    static boolean concurrencyTest = true;
+
+
     public static void main(String[] args) throws SQLException, ExecutionException, InterruptedException {
-
-
 
         DBsetup dbsetup = new DBsetup();
 
@@ -31,10 +32,17 @@ public class DBsetup extends Thread {
             return;
         }
 
-
         try {
             System.out.println("Connecting to database...");
             DBsetup.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            DBsetup.conn.setAutoCommit(false);
+
+//            System.out.println("Creating table...");
+//            String sql = 	"CREATE TABLE IF NOT EXISTS account (account_id INT, pinCode INT, balance DECIMAL, UNIQUE (account_id));";
+//            stmt = conn.createStatement();
+//            stmt.executeQuery(sql);
+//            stmt.executeUpdate(sql);
+
 
         } catch (SQLException e){
 
@@ -42,27 +50,13 @@ public class DBsetup extends Thread {
             return;
         }
 
-        Tester test = new Tester('w',20);
-
-//        System.out.println("Creating statement...");
-//        stmt = conn.createStatement();
-//
-        String sql;
-//        System.out.println("Creating table...");
-//        sql = 	"CREATE TABLE IF NOT EXISTS account (account_id INT, pinCode INT, balance DECIMAL, UNIQUE (account_id));";
-//        stmt.executeUpdate(sql);
-
-        DBsetup.conn.setAutoCommit(false);
-
 //        dbsetup.atm();
-
+        Tester test = new Tester('w', 20);
 
 //        sql = "INSERT INTO account VALUES(1, 1111, 50), (2, 2222, 50), (3,3333,50)";
 //        stmt.executeUpdate(sql);
 
-
-
-        //enable transaction demarcation
+//        enable transaction demarcation
 
 //        stmt = conn.createStatement();
 //
@@ -86,39 +80,89 @@ public class DBsetup extends Thread {
     }
 
 
-    public void atm() throws SQLException {
+    public void atm() throws SQLException, ExecutionException, InterruptedException {
 
         Scanner scan = new Scanner(System.in);
+        int account = 0 ,pin = 0;
+        try {
+            System.out.println("Enter your account number : ");
+             account = scan.nextInt();
 
-        System.out.println("Enter your account number : ");
-        int account = scan.nextInt();
-
-        System.out.println("Enter your pin : ");
-        int pin = scan.nextInt();
-
-        this.balance_inquiry(account,pin);
-        isLoggedIn = true;
-
-        while(isLoggedIn) {
-        System.out.println("Please select the method of transaction \nPress 'w' to withdraw  \nPress 'd' to Deposit  \nPress 'e' to exit \n ");
-
-        char choice = scan.next().charAt(0);
-//        System.out.println(choice);
-
-            switch (choice) {
-                case ('w'):
-                    withdraw(account, pin, 50);
-                    balance_inquiry(account, pin);
-                    break;
-                case ('d'):
-                    deposit(account, pin, 20);
-                    balance_inquiry(account, pin);
-                    break;
-                case ('e'):
-                    isLoggedIn = false;
-                    break;
-            }
+            System.out.println("Enter your pin : ");
+             pin = scan.nextInt();
         }
+        catch (Exception e){
+            System.out.println("Incorrect input.");
+            atm();
+        }
+
+        if(verify_account(account,pin)){
+
+            this.balance_inquiry(account, pin);
+            isLoggedIn = true;
+
+            while (isLoggedIn) {
+                System.out.println("Please select the method of transaction " +
+                        "\n'w' to withdraw  " +
+                        "\n'd' to deposit  " +
+//                        "\n't' to test concurrency" +
+                        "\n'e' to exit");
+
+                char choice = scan.next().charAt(0);
+    //        System.out.println(choice);
+
+                switch (choice) {
+                    case ('w'):
+                        withdraw(account, pin, 50);
+                        balance_inquiry(account, pin);
+                        break;
+                    case ('d'):
+                        deposit(account, pin, 20);
+                        balance_inquiry(account, pin);
+                        break;
+//                    case ('t'):
+//                        Tester test = new Tester('w', 20);
+//                        break;
+                    case ('e'):
+                        DBsetup.clearScreen();
+                        isLoggedIn = false;
+                        atm();
+                        break;
+                }
+            }
+        } else {
+                System.out.println("Incorrect account number or pin code.");
+                atm();
+        }
+    }
+
+
+    public boolean verify_account(int account, int pin) throws SQLException {
+
+        try {
+//            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"' for Update ;" ;
+
+            this.stmt = this.conn.createStatement();
+            ResultSet results = stmt.executeQuery(balance_inquiry);
+            conn.commit();
+            if(results.next()){
+//                System.out.println("Balance Inquiry:"+ Thread.currentThread().getName() +" Your current balance is : "+results.getString(1));
+                return true;
+            }
+            else return false;
+
+
+        } catch (SQLException e) {
+
+//            System.out.println(e);
+            e.printStackTrace();
+            conn.rollback();
+
+        }
+
+        return false;
     }
 
     public void deposit(int account, int pin, int amount) throws SQLException {
@@ -127,6 +171,11 @@ public class DBsetup extends Thread {
 
         Scanner scan = new Scanner(System.in);
         int balance  = balance_inquiry(account,pin);
+
+        if(amount >= 0 && concurrencyTest==false){
+            System.out.println("Enter the amount you want to deposit : ");
+            amount = scan.nextInt();
+        }
 
         if(amount > 0) {
 
@@ -158,7 +207,13 @@ public class DBsetup extends Thread {
 
         System.out.println(Thread.currentThread().getName()+" Withdraw");
 
-        Scanner scan = new Scanner(System.in);
+
+        if(amount >= 0 && concurrencyTest==false) {
+            System.out.println("Enter the amount you want to withdraw : ");
+            Scanner scan = new Scanner(System.in);
+            amount = scan.nextInt();
+        }
+
         int balance = balance_inquiry(account,pin);
 
 
@@ -184,7 +239,7 @@ public class DBsetup extends Thread {
             }
 
         } else {
-            System.out.println("You have insufficient balance.");
+            System.out.println("You have insufficient balance for this transaction.");
         }
 
     }
@@ -197,16 +252,17 @@ public class DBsetup extends Thread {
         try {
 //            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"' for Update ;" ;
+            String balance_inquiry = "Select balance from ec_database.account where account_id = '"+ account +"' and pinCode = '"+ pin +"' for UPDATE ;" ;
 
             this.stmt = this.conn.createStatement();
             ResultSet results = stmt.executeQuery(balance_inquiry);
 
             if(results.next()){
-                System.out.println("Balance Inquiry:"+ Thread.currentThread().getName() +" Your current balance is : "+results.getString(1));
+//                if(!concurrencyTest) {
+                    System.out.println("Current Balance :" + Thread.currentThread().getName() + " Your current balance is : " + results.getString(1) + "\n");
+//                }
 //                System.out.println("Your current balance is : "+results.getString(1));
                 balance = Integer.parseInt(results.getString(1));
-//                System.out.println(results.getString(1));
             }
         conn.commit();
         } catch (SQLException e) {
@@ -232,6 +288,8 @@ public class DBsetup extends Thread {
 //        System.out.println(Thread.currentThread().getName()+" Start. Command");
         try {
             conn.setAutoCommit(false);
+//            balance_inquiry(1,1111);
+
         } catch (SQLException e) {
             System.out.print("Something went wrong.");
             e.printStackTrace();
@@ -239,10 +297,12 @@ public class DBsetup extends Thread {
         if(isWithdrawal) {
             try {
                 isWithdrawal = false;
-//                System.out.println("Withdraw");
+                System.out.println(Thread.currentThread().getName()+" Begins to Withdrawal Amount: "+10);
 
                 withdraw(1,1111,10);
-                balance_inquiry(1,1111);
+//                balance_inquiry(1,1111);
+                System.out.println(Thread.currentThread().getName()+" Final balance : "+balance_inquiry(1,1111));
+
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NullPointerException e){
@@ -251,9 +311,9 @@ public class DBsetup extends Thread {
             } else {
                 try {
                     isWithdrawal = true;
-    //                System.out.println("Deposit");
+                    System.out.println(Thread.currentThread().getName()+" Begins to Deposit Amount: "+12);
                     deposit(1,1111,12);
-                    balance_inquiry(1,1111);
+                    System.out.println(Thread.currentThread().getName()+" Final balance : "+balance_inquiry(1,1111));
 
                 } catch (SQLException e ) {
                     e.printStackTrace();
@@ -264,4 +324,13 @@ public class DBsetup extends Thread {
 
 //        System.out.println(Thread.currentThread().getName()+" End.");
     }
+
+
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
 }
