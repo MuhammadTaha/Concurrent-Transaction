@@ -1,56 +1,20 @@
-import sun.tools.jconsole.Worker;
-
+import java.sql.SQLException;
 import java.util.concurrent.*;
 
 public class Tester{
 
-    public Tester(char type, int amount) throws ExecutionException, InterruptedException {
+    public Tester() throws ExecutionException, InterruptedException, SQLException {
 
-
-        System.out.println("\n Testing concurrency ");
-//        switch (type){
-//            case 'd':
-//                break;
-//            case 'w':
-//                break;
-//        }
-
-//        Runnable runnable = ()->{
-//            System.out.println("Hello World");
-//        };
-//        Executor executor = Executors.newFixedThreadPool(10);
-
+        System.out.println("Testing concurrency");
 
         for(int i = 0 ; i<6 ;i++) {
-            System.out.println("Thread : "+ (i+1) +" Starts.");
+            System.out.println("\n"+Thread.currentThread().getName()+" Starts.");
 
-            DBsetup ds = new DBsetup();
-            Thread.sleep(100);
+            ATMMachine ds = new ATMMachine();
+            ds.concurrencyTest = true;
             ds.start();
-
-
-
-//            executor.execute(() -> {
-//            });
-//            Runnable workerThread = new DBsetup();
 //            Thread.sleep(100);
-//            executor.execute(workerThread);
+
         }
-
-//        for(int i =0 ; i<=10 ;i++) {
-//            executor.execute(() -> {
-//                System.out.println(Thread.currentThread().getName()+" Start. Command");
-//            });
-//        }
-//        ExecutorService executorService = Executors. newFixedThreadPool(10);
-//        Future<String> future = executorService.submit(() -> "Hello World");
-//// some operations
-//        String result = future.get();
     }
-
-
-
-
-
-
 }
