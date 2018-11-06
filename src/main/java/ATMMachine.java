@@ -19,9 +19,9 @@ public class ATMMachine extends Thread {
     boolean concurrencyTest = false;
 
 
-     public ATMMachine() throws SQLException, ExecutionException, InterruptedException {
+     public ATMMachine(boolean concurrencyTest) throws SQLException, ExecutionException, InterruptedException {
 
-
+        this.concurrencyTest = concurrencyTest;
         System.out.println("Load MySQL JDBC driver");
 
         try {
@@ -38,7 +38,7 @@ public class ATMMachine extends Thread {
             this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
             this.conn.setAutoCommit(false);
 
-            if(!concurrencyTest) {
+            if(!this.concurrencyTest) {
                 this.atm();
             }
 //            System.out.println("Creating table...");

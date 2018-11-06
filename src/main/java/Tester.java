@@ -10,10 +10,10 @@ public class Tester{
         for(int i = 0 ; i<6 ;i++) {
             System.out.println("\n"+Thread.currentThread().getName()+" Starts.");
 
-            ATMMachine ds = new ATMMachine();
-            ds.concurrencyTest = true;
+            ATMMachine ds = new ATMMachine(true);
+//            ATMMachine.concurrencyTest = true;
             ds.start();
-//            Thread.sleep(100);
+            Thread.sleep(100);
 
         }
     }
