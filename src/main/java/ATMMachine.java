@@ -190,12 +190,20 @@ public class ATMMachine extends Thread {
 
         if(amount > 0) {
 
-            amount = balance + amount;
+            int new_amount = balance + amount;
 
             try {
 
-                String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id =" + account;
+                String update_balance = "UPDATE account SET balance = " + new_amount + " WHERE account_id =" + account;
+
+                String log_transaction = "Insert into transaction_log (trancation_details,transaction_time) VALUES (\" Previous Balance = " + balance +
+                        ", Amount deposited = "+amount+" \",NOW());";
+
                 this.stmt.executeUpdate(update_balance);
+
+                this.stmt = conn.createStatement();
+                this.stmt.execute(log_transaction);
+
 
                 this.conn.commit();
                 this.stmt.close();
@@ -234,14 +242,20 @@ public class ATMMachine extends Thread {
 
         if(balance > 0 && balance >= amount) {
 
-            amount = balance - amount;
+           int new_amount = balance - amount;
 
             try {
 //                conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-                String update_balance = "UPDATE account SET balance = " + amount + " WHERE account_id =" + account;
+                String update_balance = "UPDATE account SET balance = " + new_amount + " WHERE account_id = " + account+";";
+
+                String log_transaction = "Insert into transaction_log (trancation_details,transaction_time) VALUES (\" Previous Balance = " + balance +
+                        ", Amount withdrawn = "+amount+" \",NOW());";
+
                 this.stmt.executeUpdate(update_balance);
 
+                this.stmt = conn.createStatement();
+                this.stmt.execute(log_transaction);
 
                 this.conn.commit();
 //                stmt.close();
